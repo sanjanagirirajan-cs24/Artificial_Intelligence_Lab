@@ -1,0 +1,52 @@
+# Step 1: Define the Simple Reflex Agent function
+def reflex_vacuum_agent(location, status):
+    """
+    Acts based ONLY on the current location and cleanliness status.
+    Condition-Action Rules:
+    - If it's Dirty -> Suck
+    - If it's in A and Clean -> Go Right
+    - If it's in B and Clean -> Go Left
+    """
+    if status == "Dirty":
+        return "Suck"
+    elif location == "A":
+        return "Move Right"
+    elif location == "B":
+        return "Move Left"
+
+# Step 2: Simulate the environment and agent actions
+def run_simulation():
+    # An environment dictionary tracking the status of rooms A and B
+    environment = {
+        "A": "Dirty",
+        "B": "Clean"
+    }
+    
+    # Start the agent at location A
+    current_location = "A"
+    
+    print("--- Simulation Starting ---")
+    
+    # Run for 3 steps to see the reaction cycle
+    for step in range(1, 4):
+        # The agent perceives the current room's status
+        current_status = environment[current_location]
+        print(f"\n[Step {step}] Agent is in Room {current_location}. Status: {current_status}")
+        
+        # Agent decides on an action based on rules
+        action = reflex_vacuum_agent(current_location, current_status)
+        print(f"-> Agent Action: {action}")
+        
+        # Environment responds to the agent's action
+        if action == "Suck":
+            environment[current_location] = "Clean"
+            print(f"Success: Room {current_location} has been cleaned.")
+        elif action == "Move Right":
+            current_location = "B"
+        elif action == "Move Left":
+            current_location = "A"
+
+    print("\n--- Simulation Ended ---")
+
+# Run the program
+run_simulation()
