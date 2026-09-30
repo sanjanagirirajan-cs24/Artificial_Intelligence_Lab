@@ -1,0 +1,91 @@
+# Tic Tac Toe Game
+
+# Create the board
+board = [" ", " ", " ",
+         " ", " ", " ",
+         " ", " ", " "]
+
+
+# Display the board
+def display_board():
+    print()
+    print(board[0] + " | " + board[1] + " | " + board[2])
+    print("--+---+--")
+    print(board[3] + " | " + board[4] + " | " + board[5])
+    print("--+---+--")
+    print(board[6] + " | " + board[7] + " | " + board[8])
+    print()
+
+
+# Check if a player has won
+def check_winner(player):
+    winning_positions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ]
+
+    for position in winning_positions:
+        if (board[position[0]] == player and
+            board[position[1]] == player and
+            board[position[2]] == player):
+            return True
+
+    return False
+
+
+# Check if the board is full
+def check_draw():
+    return " " not in board
+
+
+# Main game
+player = "X"
+
+print("Welcome to Tic Tac Toe!")
+print("Enter a position from 1 to 9.")
+
+while True:
+
+    display_board()
+
+    try:
+        position = int(input("Player " + player + ", enter your position: "))
+
+        if position < 1 or position > 9:
+            print("Please enter a number between 1 and 9.")
+            continue
+
+        position = position - 1
+
+        if board[position] != " ":
+            print("That position is already taken!")
+            continue
+
+        board[position] = player
+
+        # Check winner
+        if check_winner(player):
+            display_board()
+            print("🎉 Player " + player + " wins!")
+            break
+
+        # Check draw
+        if check_draw():
+            display_board()
+            print("It's a draw!")
+            break
+
+        # Change player
+        if player == "X":
+            player = "O"
+        else:
+            player = "X"
+
+    except ValueError:
+        print("Please enter a valid number.")
