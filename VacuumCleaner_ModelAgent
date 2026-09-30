@@ -1,0 +1,47 @@
+B = int(input("Enter Room B status (1=Dirty, 0=Clean): "))
+
+model = {
+    "A": A,
+    "B": B
+}
+
+position = int(input("Enter starting room (1=A, 2=B): "))
+
+while model["A"] == 1 or model["B"] == 1:
+
+    if position == 1:
+        print("\nVacuum is in Room A")
+
+        model["A"] = A
+
+        if model["A"] == 1:
+            print("Room A is Dirty -> Cleaning")
+            A = 0
+            model["A"] = 0
+        else:
+            print("Room A is Clean")
+
+            if model["B"] == 1:
+                print("Moving to Room B")
+                position = 2
+
+    else:
+        print("\nVacuum is in Room B")
+
+        model["B"] = B
+
+        if model["B"] == 1:
+            print("Room B is Dirty -> Cleaning")
+            B = 0
+            model["B"] = 0
+        else:
+            print("Room B is Clean")
+
+            if model["A"] == 1:
+                print("Moving to Room A")
+                position = 1
+
+print("\nModel State:")
+print("Room A:", "Dirty" if model["A"] else "Clean")
+print("Room B:", "Dirty" if model["B"] else "Clean")
+print("Both rooms are clean.")
