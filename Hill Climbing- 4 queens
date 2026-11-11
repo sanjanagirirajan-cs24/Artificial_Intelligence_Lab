@@ -1,0 +1,39 @@
+import random
+
+def heuristic(board):
+    h = 0
+    for i in range(4):
+        for j in range(i + 1, 4):
+            if board[i] == board[j] or abs(board[i] - board[j]) == abs(i - j):
+                h += 1
+    return h
+
+def hill_climbing():
+    board = [random.randint(0, 3) for _ in range(4)]
+
+    while True:
+        h = heuristic(board)
+        if h == 0:
+            return board
+
+        best = board[:]
+        best_h = h
+
+        for i in range(4):
+            for j in range(4):
+                new_board = board[:]
+                new_board[i] = j
+                new_h = heuristic(new_board)
+
+                if new_h < best_h:
+                    best = new_board
+                    best_h = new_h
+
+        if best_h == h:
+            board = [random.randint(0, 3) for _ in range(4)]
+        else:
+            board = best
+
+solution = hill_climbing()
+print("Solution:", solution)
+print("Heuristic:", heuristic(solution))
