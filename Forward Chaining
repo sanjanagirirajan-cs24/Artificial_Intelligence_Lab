@@ -1,0 +1,29 @@
+facts = [
+    "American(Robert)",
+    "Enemy(CountryA,America)",
+    "Missile(M1)",
+    "Sells(Robert,M1,CountryA)"
+]
+
+# Rule 1: All missiles are weapons
+if "Missile(M1)" in facts:
+    facts.append("Weapon(M1)")
+
+# Rule 2: Enemy of America is hostile
+if "Enemy(CountryA,America)" in facts:
+    facts.append("Hostile(CountryA)")
+
+# Rule 3: American selling weapon to hostile country is criminal
+if ("American(Robert)" in facts and
+    "Weapon(M1)" in facts and
+    "Sells(Robert,M1,CountryA)" in facts and
+    "Hostile(CountryA)" in facts):
+    facts.append("Criminal(Robert)")
+
+# Print result
+print("Facts:", facts)
+
+if "Criminal(Robert)" in facts:
+    print("Robert is Criminal")
+else:
+    print("Robert is not Criminal")
