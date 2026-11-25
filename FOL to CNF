@@ -1,0 +1,22 @@
+
+import re
+
+def fol_to_cnf(expr):
+    # Step 1: Remove implication (P -> Q = ~P or Q)
+    expr = re.sub(r'(\w+)\s*->\s*(\w+)', r'(~\1 | \2)', expr)
+
+    # Step 2: Apply De Morgan's law
+    expr = expr.replace('~(A & B)', '(~A | ~B)')
+    expr = expr.replace('~(A | B)', '(~A & ~B)')
+
+    # Step 3: Remove double negation
+    expr = expr.replace('~~', '')
+
+    # Step 4: Print CNF
+    return expr
+
+# Example
+fol = "P -> Q"
+
+print("Original FOL:", fol)
+print("CNF:", fol_to_cnf(fol))
