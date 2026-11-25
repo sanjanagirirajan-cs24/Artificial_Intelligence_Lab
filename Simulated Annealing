@@ -1,0 +1,40 @@
+
+import random
+import math
+
+# Objective function
+def objective(x):
+    return x * x
+
+# Simulated Annealing
+def simulated_annealing():
+    current = random.uniform(-10, 10)
+    temperature = 100
+    cooling_rate = 0.95
+
+    while temperature > 0.01:
+
+        # Generate a new solution
+        new = current + random.uniform(-1, 1)
+
+        # Calculate change in cost
+        delta = objective(new) - objective(current)
+
+        # Accept better solution
+        if delta < 0:
+            current = new
+
+        # Sometimes accept worse solution
+        elif random.random() < math.exp(-delta / temperature):
+            current = new
+
+        # Reduce temperature
+        temperature *= cooling_rate
+
+    return current
+
+# Run algorithm
+best = simulated_annealing()
+
+print("Best solution:", best)
+print("Minimum value:", objective(best))
